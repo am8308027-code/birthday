@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make a Wish — Happy Birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="stars"></div>
+<div id="hearts"></div>
+<div id="confetti-layer"></div>
+
+<main class="page">
+  <div class="eyebrow fade-in">Page four</div>
+  <h2 class="script fade-in stagger-1">Make a wish</h2>
+  <p class="lead fade-in stagger-2" id="pre-text">Click the candle and blow it out.</p>
+
+  <div class="cake-scene fade-in stagger-3">
+    <div class="candle" id="candle" tabindex="0" role="button" aria-label="Blow out the candle">
+      <div class="flame" id="flame"></div>
+      <div class="smoke" id="smoke"></div>
+    </div>
+    <div class="cake-body"></div>
+  </div>
+  <div class="candle-hint" id="candle-hint">tap the flame</div>
+
+  <div class="reveal-message" id="final-message">
+    <h1 class="script" style="margin-top:28px;">I love you, today and every day.</h1>
+    <p class="lead">Whatever you wished for, I hope it comes true. And if it didn't come true on its own... tell me, and I'll spend the year trying to make it happen myself. Happy birthday, my love.</p>
+    <a href="index.html" class="btn btn-ghost" style="margin-top: 18px;">← Back to the beginning</a>
+  </div>
+</main>
+
+<nav class="journal-nav" aria-label="Page navigation">
+  <a href="index.html">Envelope</a>
+  <a href="memories.html">Memories</a>
+  <a href="letter.html">Letter</a>
+  <a href="surprise.html">Make a wish</a>
+</nav>
+
+<script src="js/main.js"></script>
+<script>
+  const candle = document.getElementById('candle');
+  const flame = document.getElementById('flame');
+  const smoke = document.getElementById('smoke');
+  const finalMessage = document.getElementById('final-message');
+  const candleHint = document.getElementById('candle-hint');
+  const preText = document.getElementById('pre-text');
+  let blown = false;
+
+  function blowOut() {
+    if (blown) return;
+    blown = true;
+    flame.classList.add('out');
+    smoke.classList.add('show');
+    candleHint.style.display = 'none';
+    preText.textContent = 'Happy birthday, my love.';
+    launchConfetti();
+    setTimeout(() => finalMessage.classList.add('show'), 500);
+  }
+
+  candle.addEventListener('click', blowOut);
+  candle.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); blowOut(); }
+  });
+
+  function launchConfetti() {
+    const layer = document.getElementById('confetti-layer');
+    const colors = ['#ff7fa8', '#f4c95d', '#9d7fd4', '#fbeee0', '#c2436b'];
+    for (let i = 0; i < 90; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      layer.appendChild(piece);
+      setTimeout(() => piece.remove(), 5000);
+    }
+  }
+</script>
+</body>
+</html>

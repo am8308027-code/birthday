@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You — Happy Birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="stars"></div>
+<div id="hearts"></div>
+
+<main class="page" style="padding-bottom: 140px;">
+  <div class="eyebrow fade-in">Page three</div>
+  <h2 class="script fade-in stagger-1">A letter, just for you</h2>
+
+  <div class="letter-sheet fade-in stagger-2" id="letter-sheet"></div>
+
+  <a href="surprise.html" class="btn fade-in" id="next-link" style="margin-top: 30px; opacity:0; pointer-events:none; transition: opacity .6s ease;">One more thing... →</a>
+</main>
+
+<nav class="journal-nav" aria-label="Page navigation">
+  <a href="index.html">Envelope</a>
+  <a href="memories.html">Memories</a>
+  <a href="letter.html">Letter</a>
+  <a href="surprise.html">Make a wish</a>
+</nav>
+
+<script src="js/main.js"></script>
+<script>
+/* ============================================================
+   EDIT HERE: write whatever you want to say to her.
+   Use \n\n for a new paragraph. Keep the {signature} part
+   at the end if you want the animated cursive sign-off.
+   ============================================================ */
+const letterText =
+`My Love,
+
+Happy Birthday, my beautiful girl. ❤️
+
+From the very first moment I saw you, something in my heart quietly told me that you were different. I couldn't explain it then, but I knew I wanted to know everything about you. Every little detail made me admire you more, until I found myself searching for the courage to talk to you and tell you what you had already done to my heart.
+
+Today, on your birthday, I want you to know that my feelings have only grown stronger. I don't just dream about loving you—I dream about building a life with you.
+
+I'm working toward one wish that means more to me than anything else: let your birthday become the day our engagement begins—the first page of our forever story.
+
+You are the greatest gift life has given me, and I promise to spend every day trying to deserve your love.
+
+Happy Birthday, my love. May this year bring you endless happiness, and may it be the year we take our first step toward forever. ❤️ `;
+
+const signature = "Yours, always.";
+
+const target = document.getElementById('letter-sheet');
+const nextLink = document.getElementById('next-link');
+let i = 0;
+const speed = 28; // ms per character
+
+function typeWriter() {
+  if (i <= letterText.length) {
+    target.innerHTML = letterText.slice(0, i) + '<span class="cursor">&nbsp;</span>';
+    i++;
+    setTimeout(typeWriter, speed);
+  } else {
+    target.innerHTML = letterText + '<span class="signature">' + signature + '</span>';
+    nextLink.style.opacity = '1';
+    nextLink.style.pointerEvents = 'auto';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => setTimeout(typeWriter, 500));
+</script>
+</body>
+</html>

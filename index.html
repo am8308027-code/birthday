@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, My Love</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     EDIT HERE: change "Sweetheart" below to her real name.
+     ============================================================ -->
+
+<div id="stars"></div>
+<div id="hearts"></div>
+
+<main class="page">
+  <div class="eyebrow fade-in">A little something for you</div>
+  <h1 class="script fade-in stagger-1">Happy Birthday, <span id="her-name">Asma Hossam</span></h1>
+  <p class="lead fade-in stagger-2">Before anything else... you have a letter waiting for you.</p>
+
+  <div class="countdown-wrap fade-in stagger-2" id="countdown-wrap"></div>
+
+  <div class="envelope-wrap fade-in stagger-3">
+    <div class="envelope" id="envelope" tabindex="0" role="button" aria-label="Open the envelope">
+      <div class="envelope-letter">Open me</div>
+      <div class="envelope-body"></div>
+      <div class="envelope-flap"></div>
+      <div class="wax-seal">♥</div>
+    </div>
+  </div>
+  <div class="envelope-hint fade-in stagger-4" id="hint">tap the envelope to open it</div>
+
+  <a href="memories.html" class="btn fade-in stagger-4" id="enter-btn" style="display:none; margin-top: 22px;">Begin the journey →</a>
+</main>
+
+<script src="js/main.js"></script>
+<script>
+  /* ============================================================
+     EDIT HERE: set her birthday date and time.
+     Format:  'YYYY-MM-DDTHH:MM:SS'
+     Example: her birthday is Sept 14, 2026 at midnight ->
+              '2026-09-14T00:00:00'
+     ============================================================ */
+  const BIRTHDAY_DATE = '2026-07-06T00:00:00';
+
+  function renderCountdown() {
+    const wrap = document.getElementById('countdown-wrap');
+    const target = new Date(BIRTHDAY_DATE).getTime();
+
+    let timer;
+
+    function tick() {
+      const now = Date.now();
+      const diff = target - now;
+
+      if (diff <= 0) {
+        wrap.innerHTML = '<div class="countdown-arrived">It\'s her day. 🎉</div>';
+        if (timer) clearInterval(timer);
+        return;
+      }
+
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+
+      wrap.innerHTML = `
+        <div class="countdown">
+          <div class="countdown-unit"><span class="num">${d}</span><span class="label">days</span></div>
+          <div class="countdown-unit"><span class="num">${String(h).padStart(2,'0')}</span><span class="label">hours</span></div>
+          <div class="countdown-unit"><span class="num">${String(m).padStart(2,'0')}</span><span class="label">min</span></div>
+          <div class="countdown-unit"><span class="num">${String(s).padStart(2,'0')}</span><span class="label">sec</span></div>
+        </div>`;
+    }
+
+    tick();
+    timer = setInterval(tick, 1000);
+  }
+
+  renderCountdown();
+
+  const envelope = document.getElementById('envelope');
+  const enterBtn = document.getElementById('enter-btn');
+  const hint = document.getElementById('hint');
+
+  function openEnvelope() {
+    if (envelope.classList.contains('open')) return;
+    envelope.classList.add('open');
+    hint.style.opacity = '0';
+    setTimeout(() => {
+      enterBtn.style.display = 'inline-block';
+      enterBtn.classList.add('fade-in');
+    }, 700);
+  }
+
+  envelope.addEventListener('click', openEnvelope);
+  envelope.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openEnvelope(); }
+  });
+</script>
+</body>
+</html>
